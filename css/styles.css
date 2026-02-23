@@ -1,0 +1,715 @@
+/* =============================================
+   DSA PATTERNS HUB — Brutalist/Acid Mind Map
+   Aesthetic: High Contrast, Sharp Edges, "Acid" Colors
+   Fonts: Syne (display), DM Sans (body), Fira Code (code)
+   ============================================= */
+
+:root {
+  --font-display: 'Syne', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+  --font-code: 'Fira Code', monospace;
+
+  /* Brutalist "Acid" Palette */
+  --bg-deep: #060606;
+  --bg-surface: #121212;
+  --text-main: #f0f0f0;
+  --text-muted: #7a7a7a;
+  --border-color: #2a2a2a;
+
+  --lime: #CCFB4C;
+  --pink: #FF2E93;
+  --orange: #FF6B00;
+  --cyan: #00F0FF;
+  --purple: #B52BFF;
+  --white: #FFFFFF;
+
+  /* Pattern Accents (recycled from the acid palette) */
+  --cat-arrays: var(--lime);
+  --cat-two-pointers: var(--pink);
+  --cat-sliding-window: var(--orange);
+  --cat-stack: var(--cyan);
+  --cat-binary-search: var(--purple);
+  --cat-linked-list: var(--lime);
+  --cat-trees: var(--pink);
+  --cat-tries: var(--orange);
+  --cat-heap: var(--cyan);
+  --cat-backtracking: var(--purple);
+  --cat-graphs: var(--lime);
+  --cat-adv-graphs: var(--pink);
+  --cat-1d-dp: var(--orange);
+  --cat-2d-dp: var(--cyan);
+  --cat-greedy: var(--purple);
+  --cat-intervals: var(--lime);
+  --cat-math: var(--pink);
+  --cat-bit: var(--orange);
+  --cat-strings: var(--cyan);
+  --cat-matrix: var(--purple);
+
+  /* Difficulty */
+  --easy: var(--lime);
+  --medium: var(--orange);
+  --hard: var(--pink);
+
+  /* Shadows */
+  --hard-shadow: 4px 4px 0 #fff;
+  --hard-shadow-active: 2px 2px 0 #fff;
+  --brutal-radius: 0px;
+  /* Sharp corners */
+}
+
+/* Reset */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg-deep);
+  color: var(--text-main);
+  line-height: 1.5;
+  overflow-x: hidden;
+  /* subtle grid pattern on body */
+  background-image: linear-gradient(#1a1a1a 1px, transparent 1px), linear-gradient(90deg, #1a1a1a 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+/* ---------- HEADER ---------- */
+.app-header {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  right: 20px;
+  min-height: 60px;
+  padding: 0.5rem 2rem;
+  background: rgba(6, 6, 6, 0.9);
+  border: 2px solid var(--border-color);
+  /* Added explicit border for floating look */
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  backdrop-filter: blur(10px);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.header-nav .nav-link {
+  font-family: var(--font-code);
+  font-size: 0.9rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: color 0.15s;
+}
+
+.header-nav .nav-link:hover {
+  color: var(--lime);
+}
+
+.logo {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.5rem;
+  color: var(--white);
+  text-transform: uppercase;
+  letter-spacing: -1px;
+}
+
+.logo-accent {
+  color: var(--lime);
+}
+
+.header-actions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.progress-pill {
+  font-family: var(--font-code);
+  font-size: 0.85rem;
+  padding: 4px 12px;
+  border: 1px solid var(--text-main);
+  background: var(--bg-deep);
+  color: var(--text-main);
+  font-weight: bold;
+}
+
+.progress-pill-count {
+  color: var(--lime);
+}
+
+.theme-toggle {
+  display: none;
+  /* Removed theme toggle for pure brutalist dark mode */
+}
+
+/* ---------- MIND MAP LAYOUT (HOME) ---------- */
+.mind-map-wrapper {
+  position: relative;
+  width: 100vw;
+  height: calc(100vh - 60px);
+  margin-top: 60px;
+  overflow: hidden;
+  /* Hide the giant canvas overflow */
+  cursor: grab;
+}
+
+.mind-map-wrapper:active {
+  cursor: grabbing;
+}
+
+.mind-map-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4000px;
+  height: 4000px;
+  transform-origin: 0 0;
+}
+
+/* SVG Lines Layer */
+.mind-map-lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.connection-line {
+  fill: none;
+  stroke: var(--border-color);
+  stroke-width: 2px;
+  /* Will animate via GSAP */
+}
+
+/* Master Node (Center) */
+.master-node {
+  position: absolute;
+  z-index: 10;
+  background: var(--bg-surface);
+  border: 4px solid var(--white);
+  padding: 2rem 3rem;
+  box-shadow: 8px 8px 0 var(--white);
+  text-align: center;
+  /* Centered at 2000, 2000 via JS */
+  transform: translate(-50%, -50%);
+}
+
+.master-node h1 {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  text-transform: uppercase;
+  color: var(--lime);
+  line-height: 1.1;
+  margin-bottom: 0.5rem;
+}
+
+.master-node p {
+  font-size: 1rem;
+  color: var(--text-muted);
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+/* Pattern Node Cards */
+.pattern-node {
+  position: absolute;
+  z-index: 5;
+  background: var(--bg-deep);
+  border: 2px solid var(--card-accent, var(--white));
+  padding: 1.5rem;
+  width: 260px;
+  box-shadow: 6px 6px 0 var(--card-accent, var(--white));
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  opacity: 0;
+  /* GSAP reveals this */
+}
+
+.pattern-node:hover {
+  transform: translate(-50%, -50%) translate(2px, 2px);
+  box-shadow: 4px 4px 0 var(--card-accent, var(--white));
+}
+
+.card-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.card-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: var(--text-main);
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.card-count {
+  font-family: var(--font-code);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+
+.card-progress-bar {
+  width: 100%;
+  height: 6px;
+  background: var(--border-color);
+  border: 1px solid var(--border-color);
+}
+
+.card-progress-fill {
+  height: 100%;
+  background: var(--card-accent, var(--lime));
+  width: 0%;
+}
+
+.card-progress-text {
+  font-family: var(--font-code);
+  font-size: 0.75rem;
+  color: var(--card-accent, var(--white));
+  margin-top: 0.5rem;
+  display: block;
+  font-weight: bold;
+}
+
+/* Controls Overlay */
+.map-controls {
+  position: absolute;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 100;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.control-btn {
+  background: var(--white);
+  color: var(--bg-deep);
+  font-family: var(--font-code);
+  font-weight: bold;
+  border: 2px solid var(--white);
+  padding: 8px 16px;
+  box-shadow: 4px 4px 0 var(--border-color);
+  transition: all 0.1s;
+}
+
+.control-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 var(--border-color);
+}
+
+/* ---------- DETAIL PAGE (Standard scroll layout) ---------- */
+.app-main#detailMain {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 100px 2rem 4rem;
+  min-height: 100vh;
+}
+
+.detail-page {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.detail-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-code);
+  font-weight: bold;
+  text-transform: uppercase;
+  color: var(--lime);
+  margin-bottom: 2rem;
+  border: 1px solid var(--lime);
+  padding: 4px 12px;
+  box-shadow: 3px 3px 0 var(--lime);
+  transition: all 0.1s;
+}
+
+.detail-back:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--lime);
+}
+
+.detail-back svg {
+  width: 16px;
+  height: 16px;
+}
+
+.detail-header {
+  border: 2px solid var(--border-color);
+  padding: 2rem;
+  margin-bottom: 2rem;
+  background: var(--bg-surface);
+  position: relative;
+}
+
+/* A brutalist structural element */
+.detail-header::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  width: 10px;
+  height: 10px;
+  background: var(--white);
+}
+
+.detail-header-top {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+
+.detail-icon {
+  font-size: 3.5rem;
+}
+
+.detail-title {
+  font-family: var(--font-display);
+  font-size: 3rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  line-height: 1.1;
+  margin-bottom: 0.5rem;
+}
+
+.detail-meta {
+  display: flex;
+  gap: 1.5rem;
+  font-family: var(--font-code);
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.detail-meta strong {
+  color: var(--white);
+}
+
+.detail-explanation {
+  border-left: 4px solid var(--white);
+  padding-left: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.detail-explanation h3 {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  color: var(--white);
+}
+
+.detail-explanation p {
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+  max-width: 800px;
+}
+
+.code-block {
+  background: #000;
+  border: 1px solid var(--border-color);
+  padding: 1.5rem;
+  font-family: var(--font-code);
+  font-size: 0.85rem;
+  color: #a5d6ff;
+  overflow-x: auto;
+  margin-top: 1rem;
+}
+
+.code-label {
+  font-family: var(--font-code);
+  font-weight: bold;
+  color: var(--lime);
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Algorithm Pills */
+.algo-section {
+  margin: 1.5rem 0;
+}
+
+.algo-section h3 {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  color: var(--white);
+}
+
+.algo-pills {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  max-width: 400px;
+}
+
+.algo-pill {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  padding: 8px 16px;
+  border: 1px solid currentColor;
+  border-radius: 8px;
+  background: transparent;
+  width: 100%;
+}
+
+.algo-pill:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Detail Filters */
+.detail-filters {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.filter-pill {
+  font-family: var(--font-code);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+}
+
+.filter-pill.active {
+  border-color: var(--white);
+  color: var(--bg-deep);
+  background: var(--white);
+  font-weight: bold;
+}
+
+.filter-pill[data-filter="Easy"].active {
+  background: var(--easy);
+  border-color: var(--easy);
+}
+
+.filter-pill[data-filter="Medium"].active {
+  background: var(--medium);
+  border-color: var(--medium);
+}
+
+.filter-pill[data-filter="Hard"].active {
+  background: var(--hard);
+  border-color: var(--hard);
+}
+
+/* Problem Table (Brutalist Style) */
+.problem-table-wrapper {
+  border: 2px solid var(--border-color);
+}
+
+.problem-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.problem-table th {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  text-align: left;
+  padding: 1rem;
+  border-bottom: 2px solid var(--border-color);
+  background: var(--bg-surface);
+  color: var(--white);
+}
+
+.problem-table td {
+  padding: 1rem;
+  border-bottom: 1px solid var(--border-color);
+  vertical-align: middle;
+}
+
+.problem-table tr:hover {
+  background: #0a0a0a;
+}
+
+.col-num {
+  font-family: var(--font-code);
+  color: var(--text-muted);
+}
+
+.problem-name-link {
+  font-weight: bold;
+  font-size: 1.05rem;
+}
+
+.problem-name-link:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+.problem-row.solved .problem-name-link {
+  color: var(--text-muted);
+  text-decoration: line-through;
+}
+
+/* Brutalist Checkbox */
+.custom-check {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.custom-check input {
+  opacity: 0;
+  position: absolute;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.checkmark {
+  position: absolute;
+  inset: 0;
+  border: 2px solid var(--border-color);
+  background: var(--bg-surface);
+  transition: background 0.1s;
+}
+
+.custom-check input:checked+.checkmark {
+  background: var(--lime);
+  border-color: var(--lime);
+}
+
+.custom-check input:checked+.checkmark::after {
+  content: '';
+  position: absolute;
+  left: 7px;
+  top: 3px;
+  width: 6px;
+  height: 12px;
+  border: solid var(--bg-deep);
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
+
+/* Badges */
+.badge {
+  font-family: var(--font-code);
+  font-size: 0.75rem;
+  font-weight: bold;
+  padding: 4px 8px;
+  text-transform: uppercase;
+}
+
+.badge-easy {
+  background: var(--easy);
+  color: var(--bg-deep);
+}
+
+.badge-medium {
+  background: var(--medium);
+  color: var(--bg-deep);
+}
+
+.badge-hard {
+  background: var(--hard);
+  color: var(--bg-deep);
+}
+
+.badge-source {
+  border: 1px solid var(--text-muted);
+  color: var(--text-muted);
+  background: transparent;
+}
+
+.external-link {
+  color: var(--white);
+}
+
+.external-link:hover {
+  color: var(--lime);
+}
+
+/* ---------- SEARCH ---------- */
+.search-container {
+  max-width: 800px;
+  margin: 0 auto 3rem;
+  text-align: center;
+}
+
+.search-input {
+  width: 100%;
+  font-family: var(--font-code);
+  font-size: 1.2rem;
+  padding: 1rem;
+  border: 2px solid var(--border-color);
+  background: var(--bg-surface);
+  color: var(--white);
+  outline: none;
+  margin-bottom: 1rem;
+}
+
+.search-input:focus {
+  border-color: var(--cyan);
+  box-shadow: 6px 6px 0 var(--cyan);
+}
+
+/* Missing base footer class overrides */
+.app-footer {
+  display: none;
+  /* Hide footer for mind map aesthetic */
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
