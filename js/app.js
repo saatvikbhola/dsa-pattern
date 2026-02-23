@@ -494,8 +494,10 @@
       const q = input.value.toLowerCase().trim();
       let results = [];
       PATTERNS.forEach(pat => {
-        pat.problems.forEach(prob => {
-          if (!q || prob.name.toLowerCase().includes(q)) results.push({ pat, prob });
+        pat.problems.forEach(group => {
+          group.list.forEach(prob => {
+            if (!q || prob.name.toLowerCase().includes(q)) results.push({ pat, prob });
+          });
         });
       });
 
