@@ -58,6 +58,31 @@
   /* Sharp corners */
 }
 
+/* Custom Cursors */
+*,
+*::before,
+*::after {
+  cursor: url('../cursor/unhovered.png') 4 2, auto;
+}
+
+a,
+button,
+label,
+input[type="checkbox"],
+[onclick],
+.pattern-node,
+.filter-pill,
+.nav-link,
+.logo,
+.control-btn,
+.algo-pill,
+.external-link,
+.problem-name-link,
+.reset-btn,
+.theme-toggle {
+  cursor: url('../cursor/hovered.png') 10 2, pointer;
+}
+
 /* Reset */
 *,
 *::before,
