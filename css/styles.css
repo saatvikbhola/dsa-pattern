@@ -59,6 +59,11 @@
 }
 
 /* Custom Cursors */
+html,
+body {
+  cursor: url('../cursor/unhovered.png') 4 2, auto !important;
+}
+
 *,
 *::before,
 *::after {
@@ -80,7 +85,7 @@ input[type="checkbox"],
 .problem-name-link,
 .reset-btn,
 .theme-toggle {
-  cursor: url('../cursor/hovered.png') 10 2, pointer;
+  cursor: url('../cursor/hovered.png') 10 2, pointer !important;
 }
 
 /* Reset */
