@@ -162,16 +162,18 @@
     let pathId = 0;
 
     Object.entries(GRAPH_LINKS).forEach(([parentId, children]) => {
-      let parentX, parentY;
+      let parentX, parentY, parentColor;
 
       if (parentId === "masterNode") {
         parentX = masterPos.x + 150; // shift right to edge of master card
         parentY = masterPos.y;
+        parentColor = "var(--white)";
       } else {
         const parentNode = nodes.find(n => n.pat.id === parentId);
         if (!parentNode) return;
         parentX = parentNode.x + 130;  // shift right to edge of pattern card
         parentY = parentNode.y;
+        parentColor = `var(${parentNode.pat.accentVar})`;
       }
 
       children.forEach(childId => {
@@ -186,6 +188,7 @@
 
         svgPaths.push(`
           <path class="connection-line" id="line-${pathId++}" 
+                style="stroke: ${parentColor}"
                 d="M ${parentX} ${parentY} C ${midX} ${parentY}, ${midX} ${childY}, ${childX} ${childY}" />
         `);
       });
