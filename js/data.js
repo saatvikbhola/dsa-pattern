@@ -11,30 +11,19 @@ const E = "Easy", M = "Medium", H = "Hard";
 
 const PATTERNS = [
   {
-    id: "arrays-hashing", name: "Arrays & Hashing", icon: "📦",
+    id: "arrays", name: "Arrays", icon: "📦",
     accentVar: "--cat-arrays",
-    description: "Foundation of most interview problems. Tests basic data manipulation, frequency counting, and hash-based lookups for O(1) access.",
-    keyInsight: "When you need fast lookups or counting, reach for a hash map. When you see 'find duplicates' or 'group by', think hashing.",
-    algorithms: ["Kadane's Algorithm", "Prefix Sum", "Boyer-Moore Voting", "Dutch National Flag", "Hashing / Frequency Count"],
-    codeTemplate: `# Two Sum pattern
-def two_sum(nums, target):
-    seen = {}
-    for i, n in enumerate(nums):
-        comp = target - n
-        if comp in seen:
-            return [seen[comp], i]
-        seen[n] = i`,
+    description: "Foundation of most interview problems. Tests in-place manipulation, prefix computations, and classic array algorithms like Kadane's and Dutch National Flag.",
+    keyInsight: "Think about what happens when the array is sorted. In-place tricks (swap, overwrite) avoid extra space. Prefix sums turn range queries into O(1).",
+    algorithms: ["Kadane's Algorithm", "Prefix Sum", "Boyer-Moore Voting", "Dutch National Flag", "In-Place Array Operations"],
+    codeTemplate: `# Kadane's Algorithm — Maximum Subarray
+def maxSubArray(nums):
+    cur = best = nums[0]
+    for n in nums[1:]:
+        cur = max(n, cur + n)
+        best = max(best, cur)
+    return best`,
     problems: [
-      {
-        algorithm: "Hashing / Frequency Count",
-        list: [
-          p("Two Sum", E, 0, "two-sum"), p("Contains Duplicate", E, 0, "contains-duplicate"), p("Valid Anagram", E, 0, "valid-anagram"),
-          p("Group Anagrams", M, 0, "group-anagrams"), p("Top K Frequent Elements", M, 0, "top-k-frequent-elements"),
-          p("Valid Sudoku", M, 0, "valid-sudoku"), p("Intersection of Two Arrays II", E, 0, "intersection-of-two-arrays-ii"),
-          p("Encode and Decode Strings", M, 1, "encode-and-decode-strings3544"), p("4Sum II", M, 0, "4sum-ii"),
-          p("Longest Consecutive Sequence", M, 0, "longest-consecutive-sequence")
-        ]
-      },
       {
         algorithm: "Prefix Sum",
         list: [
@@ -62,6 +51,33 @@ def two_sum(nums, target):
         algorithm: "Dutch National Flag & Boyer-Moore",
         list: [
           p("Sort Colors", M, 0, "sort-colors"), p("Majority Element", E, 0, "majority-element")
+        ]
+      }
+    ]
+  },
+  {
+    id: "hashing", name: "Hashing", icon: "#️⃣",
+    accentVar: "--cat-hashing",
+    description: "Hash maps and sets provide O(1) lookups. Essential for frequency counting, duplicate detection, grouping, and complement-based pair problems.",
+    keyInsight: "When you see 'find duplicates', 'group by', or 'check if exists' — reach for a hash map. Two Sum is the mother of all hash problems.",
+    algorithms: ["Hashing / Frequency Count", "Two Sum Pattern", "Anagram Grouping", "Set Operations"],
+    codeTemplate: `# Two Sum pattern
+def two_sum(nums, target):
+    seen = {}
+    for i, n in enumerate(nums):
+        comp = target - n
+        if comp in seen:
+            return [seen[comp], i]
+        seen[n] = i`,
+    problems: [
+      {
+        algorithm: "Hashing / Frequency Count",
+        list: [
+          p("Two Sum", E, 0, "two-sum"), p("Contains Duplicate", E, 0, "contains-duplicate"), p("Valid Anagram", E, 0, "valid-anagram"),
+          p("Group Anagrams", M, 0, "group-anagrams"), p("Top K Frequent Elements", M, 0, "top-k-frequent-elements"),
+          p("Valid Sudoku", M, 0, "valid-sudoku"), p("Intersection of Two Arrays II", E, 0, "intersection-of-two-arrays-ii"),
+          p("Encode and Decode Strings", M, 1, "encode-and-decode-strings3544"), p("4Sum II", M, 0, "4sum-ii"),
+          p("Longest Consecutive Sequence", M, 0, "longest-consecutive-sequence")
         ]
       }
     ]

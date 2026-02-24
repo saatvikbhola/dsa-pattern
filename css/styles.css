@@ -25,6 +25,7 @@
 
   /* Pattern Accents (recycled from the acid palette) */
   --cat-arrays: var(--lime);
+  --cat-hashing: var(--purple);
   --cat-two-pointers: var(--pink);
   --cat-sliding-window: var(--orange);
   --cat-stack: var(--cyan);

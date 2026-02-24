@@ -87,8 +87,9 @@
 
     // Explicit dependencies (Parent -> Children)
     const GRAPH_LINKS = {
-      "masterNode": ["arrays-hashing"],
-      "arrays-hashing": ["two-pointers", "stack"],
+      "masterNode": ["arrays", "hashing"],
+      "arrays": ["two-pointers", "stack"],
+      "hashing": ["two-pointers"],
       "two-pointers": ["sliding-window", "linked-list", "binary-search"],
       "sliding-window": ["intervals"],
       "binary-search": ["trees"],
@@ -100,19 +101,20 @@
       "graphs": ["advanced-graphs", "matrix-2d-arrays"],
       "matrix-2d-arrays": ["2-d-dynamic-programming"],
       "1-d-dynamic-programming": ["2-d-dynamic-programming", "bit-manipulation"],
-      "math-geometry": [], // Will attach to master or leave floating near bit
+      "math-geometry": [],
       "bit-manipulation": ["math-geometry"],
-      "strings": [] // Will attach to arrays-hashing
+      "strings": []
     };
 
     // Override generic links for missing items
-    GRAPH_LINKS["arrays-hashing"].push("strings");
+    GRAPH_LINKS["hashing"].push("strings");
 
     // Assign fixed X, Y grid coordinates to avoid crossover nightmare
     // Grid: X_COL * 450, Y_ROW * 250
     const NODE_GRID = {
       "masterNode": { col: 0, row: 4 },
-      "arrays-hashing": { col: 1, row: 4 },
+      "arrays": { col: 1, row: 3 },
+      "hashing": { col: 1, row: 5 },
       "strings": { col: 2, row: 1 },
       "two-pointers": { col: 2, row: 3 },
       "stack": { col: 2, row: 6 },
