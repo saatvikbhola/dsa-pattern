@@ -97,6 +97,8 @@
       renderDetail(main, id);
     } else if (hash === "#/search") {
       renderSearch(main);
+    } else if (hash === "#/randomizer") {
+      renderRandomizer(main);
     } else {
       renderHome(main);
     }
@@ -696,6 +698,164 @@
     input.addEventListener("input", doSearch);
     doSearch();
     setTimeout(() => input.focus(), 100);
+  }
+
+  // ===== RENDER: RANDOMIZER =====
+  function renderRandomizer(container) {
+    container.innerHTML = `
+      <div class="app-main" id="randomizerMain">
+        <div class="noise-overlay" aria-hidden="true" style="opacity: 0.15; z-index: -1;"></div>
+        <div class="randomizer-header">
+          <h1 class="detail-title glitch-text" style="text-align: center;">RANDOMIZER</h1>
+          <p style="text-align: center; color: var(--text-muted); margin-bottom: 2rem;">Let fate decide your next problem.</p>
+        </div>
+        
+        <div class="randomizer-controls">
+          <div class="randomizer-select-group">
+            <label class="code-label">Pattern</label>
+            <select id="randPattern" class="randomizer-select">
+              <option value="all">ALL PATTERNS</option>
+              ${PATTERNS.map(p => `<option value="${p.id}">${p.name}</option>`).join('')}
+            </select>
+          </div>
+          <div class="randomizer-select-group">
+            <label class="code-label">Difficulty</label>
+            <select id="randDifficulty" class="randomizer-select">
+              <option value="all">ALL DIFFICULTIES</option>
+              <option value="Easy">EASY</option>
+              <option value="Medium">MEDIUM</option>
+              <option value="Hard">HARD</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="slot-machine-container">
+          <div class="slot-machine-pointer slot-left">▶</div>
+          <div class="slot-machine-window" id="slotWindow">
+            <div class="slot-machine-reel" id="slotReel">
+              <div class="slot-item empty">Ready to spin...</div>
+            </div>
+          </div>
+          <div class="slot-machine-pointer slot-right">◀</div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 3rem;">
+          <button class="control-btn" id="btnSpin" style="font-size: 1.5rem; padding: 16px 48px; background: var(--lime); color: var(--bg-deep); border: 4px solid var(--lime);">SPIN INITIALIZE</button>
+        </div>
+        
+        <div id="randResult" class="rand-result-container" style="display: none; margin-top: 3rem; text-align: center; border: 2px solid var(--border-color); padding: 2rem;">
+        </div>
+      </div>
+    `;
+
+    const btnSpin = document.getElementById("btnSpin");
+    const diffSelect = document.getElementById("randDifficulty");
+    const patternSelect = document.getElementById("randPattern");
+    let currentDiff = "all";
+
+    diffSelect.addEventListener("change", () => {
+      currentDiff = diffSelect.value;
+    });
+
+    btnSpin.addEventListener("click", () => {
+      const patVal = patternSelect.value;
+      let pool = [];
+      PATTERNS.forEach(pat => {
+        if (patVal !== "all" && pat.id !== patVal) return;
+        pat.problems.forEach(group => {
+          group.list.forEach(prob => {
+            if (currentDiff !== "all" && prob.difficulty !== currentDiff) return;
+            pool.push({ pat, prob });
+          });
+        });
+      });
+
+      if (pool.length === 0) {
+        document.getElementById("slotReel").innerHTML = `<div class="slot-item empty" style="color: var(--pink);">No problems match criteria!</div>`;
+        return;
+      }
+
+      btnSpin.disabled = true;
+      btnSpin.style.opacity = "0.5";
+      document.getElementById("randResult").style.display = "none";
+
+      const winner = pool[Math.floor(Math.random() * pool.length)];
+
+      const reel = document.getElementById("slotReel");
+      const SPIN_COUNT = 30;
+      const itemHeight = 50;
+      const windowHeight = 150;
+
+      // Pick random faded neighbors
+      const aboveProb = pool[Math.floor(Math.random() * pool.length)];
+      const belowProb = pool[Math.floor(Math.random() * pool.length)];
+
+      // Build reel: faded-above, WINNER, faded-below, then spinning items
+      let itemsHtml = `<div class="slot-item slot-faded">${aboveProb.prob.name}</div>`;
+      itemsHtml += `<div class="slot-item winner" style="color: var(${winner.pat.accentVar});">${winner.pat.icon} ${winner.prob.name}</div>`;
+      itemsHtml += `<div class="slot-item slot-faded">${belowProb.prob.name}</div>`;
+
+      for (let i = 0; i < SPIN_COUNT; i++) {
+        const randProb = pool[Math.floor(Math.random() * pool.length)];
+        itemsHtml += `<div class="slot-item">${randProb.prob.name}</div>`;
+      }
+
+      reel.innerHTML = itemsHtml;
+
+      const totalItems = SPIN_COUNT + 3;
+      // Center winner (index 1) in window
+      const winnerY = -(1 * itemHeight) + (windowHeight - itemHeight) / 2;
+      const startY = -((totalItems - 1) * itemHeight) + (windowHeight - itemHeight) / 2;
+
+      // Motion blur effect during spin
+      gsap.to(reel, { filter: "blur(4px)", duration: 0.2 });
+
+      gsap.fromTo(reel,
+        { y: startY },
+        {
+          y: winnerY,
+          duration: 3.5,
+          ease: "power4.out",
+          onUpdate: function () {
+            // Remove blur near the end
+            if (this.progress() > 0.8) {
+              gsap.to(reel, { filter: "blur(0px)", duration: 0.3 });
+            }
+          },
+          onComplete: () => {
+            btnSpin.disabled = false;
+            btnSpin.style.opacity = "1";
+
+            const resContainer = document.getElementById("randResult");
+            const badgeMap = { "Easy": "badge-easy", "Medium": "badge-medium", "Hard": "badge-hard" };
+            const key = problemKey(winner.pat.id, winner.prob.name);
+            const isSolved = solvedSet.has(key);
+
+            resContainer.innerHTML = `
+              <table class="problem-table">
+                <tbody>
+                  <tr class="problem-row ${isSolved ? 'solved' : ''}">
+                    <td style="width:50px"><label class="custom-check"><input type="checkbox" class="problem-check" data-key="${key}" ${isSolved ? 'checked' : ''}><span class="checkmark"></span></label></td>
+                    <td><a href="${winner.prob.url}" target="_blank" class="problem-name-link">${winner.prob.name}</a></td>
+                    <td style="width:150px; color:var(${winner.pat.accentVar});font-family:var(--font-code);font-size:0.8rem">${winner.pat.name}</td>
+                    <td style="width:120px"><span class="badge ${badgeMap[winner.prob.difficulty]}">${winner.prob.difficulty}</span></td>
+                    <td style="width:40px"><a href="${winner.prob.url}" target="_blank" class="external-link">↗</a></td>
+                  </tr>
+                </tbody>
+              </table>
+            `;
+            resContainer.style.display = "block";
+            gsap.from(resContainer, { y: 20, opacity: 0, duration: 0.5 });
+
+            resContainer.querySelector(".problem-check").addEventListener("change", e => {
+              if (e.target.checked) solvedSet.add(key); else solvedSet.delete(key);
+              e.target.closest("tr").classList.toggle("solved", e.target.checked);
+              saveProgress();
+            });
+          }
+        }
+      );
+    });
   }
 
   // ===== UTILS =====
