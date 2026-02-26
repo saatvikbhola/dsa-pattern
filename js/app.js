@@ -4,7 +4,9 @@
 
   // ===== STATE =====
   const STORAGE_KEY = "dsa-hub-progress";
+  const NOTES_KEY = "dsa-hub-notes";
   let solvedSet = new Set();
+  let notesMap = {};
 
   // Constants for map layout
   const MAP_SIZE = 4000;
@@ -22,6 +24,29 @@
     localStorage.setItem(STORAGE_KEY, JSON.stringify([...solvedSet]));
     updateGlobalProgress();
   }
+  // notesMap[key] = [ {id, text, x, y, color}, ... ]
+  function loadNotes() {
+    try {
+      const raw = JSON.parse(localStorage.getItem(NOTES_KEY) || "{}");
+      // Migrate old string-based notes to new array format
+      Object.keys(raw).forEach(k => {
+        if (typeof raw[k] === "string") {
+          raw[k] = raw[k].trim() ? [{ id: Date.now(), text: raw[k], x: 16, y: 16, color: 0 }] : [];
+        }
+      });
+      notesMap = raw;
+    } catch { notesMap = {}; }
+  }
+  function saveNotes(key) {
+    localStorage.setItem(NOTES_KEY, JSON.stringify(notesMap));
+  }
+  const STICKY_COLORS = [
+    { bg: "#fef08a", text: "#713f12" },  // yellow
+    { bg: "#fda4af", text: "#881337" },  // pink
+    { bg: "#86efac", text: "#14532d" },  // green
+    { bg: "#93c5fd", text: "#1e3a5f" },  // blue
+    { bg: "#c4b5fd", text: "#3b0764" }   // purple
+  ];
   function problemKey(patternId, problemName) { return patternId + "::" + problemName; }
 
   // ===== GLOBAL PROGRESS =====
@@ -429,6 +454,21 @@
       });
     });
 
+    // Notes toggle events
+    container.querySelectorAll(".notes-toggle-btn").forEach(btn => {
+      btn.addEventListener("click", e => {
+        e.preventDefault();
+        const key = btn.dataset.noteKey;
+        const notesRow = container.querySelector(`.notes-row[data-note-key="${key}"]`);
+        if (!notesRow) return;
+        const isOpen = notesRow.classList.toggle("open");
+        btn.classList.toggle("active", isOpen);
+        if (isOpen) {
+          initStickyBoard(container, key);
+        }
+      });
+    });
+
     // Filters
     container.querySelectorAll("#detailFilters .filter-pill").forEach(btn => {
       btn.addEventListener("click", () => {
@@ -458,6 +498,8 @@
   function renderProblemRow(pat, prob, index) {
     const key = problemKey(pat.id, prob.name);
     const isSolved = solvedSet.has(key);
+    const stickyNotes = notesMap[key] || [];
+    const hasNote = stickyNotes.length > 0;
     const badgeMap = { "Easy": "badge-easy", "Medium": "badge-medium", "Hard": "badge-hard" };
 
     return `<tr class="problem-row ${isSolved ? "solved" : ""}" data-difficulty="${prob.difficulty}">
@@ -466,8 +508,132 @@
       <td><a href="${prob.url}" target="_blank" class="problem-name-link">${prob.name}</a></td>
       <td><span class="badge ${badgeMap[prob.difficulty]}">${prob.difficulty}</span></td>
       <td><span class="badge badge-source">${prob.source.slice(0, 2)}</span></td>
-      <td><a href="${prob.url}" target="_blank" class="external-link">↗</a></td>
+      <td><button class="notes-toggle-btn ${hasNote ? 'has-note' : ''}" data-note-key="${key}" title="Toggle notes">📝</button></td>
+    </tr>
+    <tr class="notes-row" data-note-key="${key}">
+      <td colspan="6">
+        <div class="sticky-board" data-note-key="${key}">
+          <div class="sticky-board-toolbar">
+            <span class="notes-label">// STICKY NOTES</span>
+            <button class="sticky-add-btn" data-note-key="${key}">＋ Add Note</button>
+          </div>
+          <div class="sticky-board-area" data-note-key="${key}">
+            ${stickyNotes.map(n => renderStickyNote(n)).join("")}
+          </div>
+        </div>
+      </td>
     </tr>`;
+  }
+
+  function renderStickyNote(note) {
+    const c = STICKY_COLORS[note.color % STICKY_COLORS.length];
+    const wStyle = note.w ? `width:${note.w}px;` : "";
+    const hStyle = note.h ? `height:${note.h}px;` : "";
+    return `<div class="sticky-note" data-note-id="${note.id}" style="left:${note.x}px;top:${note.y}px;${wStyle}${hStyle}background:${c.bg};color:${c.text}">
+      <div class="sticky-note-header">
+        <span class="sticky-note-drag">⠿</span>
+        <button class="sticky-note-delete" data-note-id="${note.id}">✕</button>
+      </div>
+      <textarea class="sticky-note-text" placeholder="Write here...">${escapeHtml(note.text)}</textarea>
+    </div>`;
+  }
+
+  function initStickyBoard(container, key) {
+    const board = container.querySelector(`.sticky-board-area[data-note-key="${key}"]`);
+    if (!board || board.dataset.initialized) return;
+    board.dataset.initialized = "1";
+
+    // Make existing notes draggable
+    board.querySelectorAll(".sticky-note").forEach(el => makeDraggable(el, key));
+
+    // Add note button
+    const addBtn = container.querySelector(`.sticky-add-btn[data-note-key="${key}"]`);
+    if (addBtn) {
+      addBtn.addEventListener("click", () => {
+        if (!notesMap[key]) notesMap[key] = [];
+        const colorIdx = notesMap[key].length % STICKY_COLORS.length;
+        const newNote = { id: Date.now(), text: "", x: 16 + (notesMap[key].length % 4) * 180, y: 16, color: colorIdx };
+        notesMap[key].push(newNote);
+        saveNotes(key);
+        const html = renderStickyNote(newNote);
+        board.insertAdjacentHTML("beforeend", html);
+        const el = board.querySelector(`.sticky-note[data-note-id="${newNote.id}"]`);
+        if (el) {
+          makeDraggable(el, key);
+          gsap.from(el, { scale: 0, rotation: -10, duration: 0.3, ease: "back.out(1.7)" });
+          setTimeout(() => el.querySelector(".sticky-note-text").focus(), 100);
+        }
+        updateDotIndicator(container, key);
+      });
+    }
+
+    // Delete events (delegated)
+    board.addEventListener("click", e => {
+      const delBtn = e.target.closest(".sticky-note-delete");
+      if (delBtn) {
+        const noteId = Number(delBtn.dataset.noteId);
+        const noteEl = board.querySelector(`.sticky-note[data-note-id="${noteId}"]`);
+        if (noteEl) {
+          gsap.to(noteEl, { scale: 0, opacity: 0, rotation: 10, duration: 0.2, onComplete: () => noteEl.remove() });
+        }
+        if (notesMap[key]) notesMap[key] = notesMap[key].filter(n => n.id !== noteId);
+        saveNotes(key);
+        updateDotIndicator(container, key);
+      }
+    });
+
+    // Text input events (delegated)
+    board.addEventListener("input", e => {
+      if (e.target.classList.contains("sticky-note-text")) {
+        const noteEl = e.target.closest(".sticky-note");
+        const noteId = Number(noteEl.dataset.noteId);
+        const entry = (notesMap[key] || []).find(n => n.id === noteId);
+        if (entry) { entry.text = e.target.value; saveNotes(key); }
+        updateDotIndicator(container, key);
+      }
+    });
+
+    // Save sticky note size on resize (mouseup after resize)
+    board.addEventListener("mouseup", e => {
+      const noteEl = e.target.closest(".sticky-note");
+      if (noteEl) {
+        const noteId = Number(noteEl.dataset.noteId);
+        const entry = (notesMap[key] || []).find(n => n.id === noteId);
+        if (entry) {
+          const w = noteEl.offsetWidth;
+          const h = noteEl.offsetHeight;
+          if (w !== entry.w || h !== entry.h) {
+            entry.w = w;
+            entry.h = h;
+            saveNotes(key);
+          }
+        }
+      }
+    });
+  }
+
+  function makeDraggable(el, key) {
+    Draggable.create(el, {
+      type: "x,y",
+      bounds: el.closest(".sticky-board-area"),
+      trigger: el.querySelector(".sticky-note-drag"),
+      edgeResistance: 0.8,
+      onDragEnd: function () {
+        const noteId = Number(el.dataset.noteId);
+        const entry = (notesMap[key] || []).find(n => n.id === noteId);
+        if (entry) {
+          entry.x = Math.round(this.x + parseFloat(el.style.left || 0));
+          entry.y = Math.round(this.y + parseFloat(el.style.top || 0));
+          saveNotes(key);
+        }
+      }
+    });
+  }
+
+  function updateDotIndicator(container, key) {
+    const btn = container.querySelector(`.notes-toggle-btn[data-note-key="${key}"]`);
+    const hasNotes = (notesMap[key] || []).some(n => n.text.trim());
+    if (btn) btn.classList.toggle("has-note", hasNotes);
   }
 
   // ===== RENDER: SEARCH =====
@@ -539,6 +705,7 @@
   // ===== INIT =====
   function init() {
     loadProgress();
+    loadNotes();
     window.addEventListener("hashchange", route);
     route();
   }

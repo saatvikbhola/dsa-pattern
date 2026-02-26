@@ -744,3 +744,216 @@ button {
     opacity: 1;
   }
 }
+
+/* ---------- STICKY NOTES ---------- */
+.notes-toggle-btn {
+  background: none;
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  font-size: 1rem;
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: all 0.15s;
+  padding: 0;
+  line-height: 1;
+}
+
+.notes-toggle-btn:hover {
+  border-color: var(--cyan);
+  color: var(--white);
+  background: rgba(0, 240, 255, 0.08);
+}
+
+.notes-toggle-btn.active {
+  border-color: var(--cyan);
+  background: rgba(0, 240, 255, 0.12);
+  box-shadow: 0 0 8px rgba(0, 240, 255, 0.25);
+}
+
+/* Dot indicator when note exists */
+.notes-toggle-btn.has-note::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  width: 7px;
+  height: 7px;
+  background: var(--lime);
+  border-radius: 50%;
+  box-shadow: 0 0 6px var(--lime);
+}
+
+/* Notes row - hidden by default */
+.notes-row {
+  display: none;
+}
+
+.notes-row.open {
+  display: table-row;
+}
+
+.notes-row td {
+  padding: 0 !important;
+  border-bottom: 2px solid var(--border-color) !important;
+}
+
+.sticky-board {
+  background: #0a0a0a;
+  border-left: 3px solid var(--cyan);
+  animation: noteSlideIn 0.2s ease-out;
+}
+
+.sticky-board-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.notes-label {
+  font-family: var(--font-code);
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: var(--cyan);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.sticky-add-btn {
+  font-family: var(--font-code);
+  font-size: 0.8rem;
+  font-weight: bold;
+  padding: 5px 14px;
+  border: 1px solid var(--lime);
+  color: var(--lime);
+  background: transparent;
+  text-transform: uppercase;
+  transition: all 0.15s;
+  letter-spacing: 0.5px;
+}
+
+.sticky-add-btn:hover {
+  background: var(--lime);
+  color: var(--bg-deep);
+  box-shadow: 0 0 10px rgba(204, 251, 76, 0.3);
+}
+
+/* Board area — resizable container */
+.sticky-board-area {
+  position: relative;
+  min-height: 220px;
+  height: 280px;
+  resize: vertical;
+  overflow: auto;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 20px 20px;
+  background-color: #080808;
+  padding: 0.5rem;
+}
+
+/* Individual sticky note */
+.sticky-note {
+  position: absolute;
+  width: 170px;
+  min-height: 120px;
+  border-radius: 2px;
+  box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  z-index: 5;
+  transition: box-shadow 0.15s;
+  transform: rotate(-0.5deg);
+  resize: both;
+  overflow: auto;
+  scrollbar-width: none;
+  min-width: 120px;
+}
+
+.sticky-note:nth-child(2n) {
+  transform: rotate(0.7deg);
+}
+
+.sticky-note:nth-child(3n) {
+  transform: rotate(-1deg);
+}
+
+.sticky-note:hover {
+  box-shadow: 4px 4px 14px rgba(0, 0, 0, 0.6), 0 2px 6px rgba(0, 0, 0, 0.4);
+  z-index: 10;
+}
+
+.sticky-note-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 8px 0;
+  flex-shrink: 0;
+}
+
+.sticky-note-drag {
+  cursor: grab;
+  font-size: 1.1rem;
+  opacity: 0.4;
+  user-select: none;
+  line-height: 1;
+}
+
+.sticky-note-drag:active {
+  cursor: grabbing;
+}
+
+.sticky-note-delete {
+  background: none;
+  border: none;
+  font-size: 0.85rem;
+  opacity: 0.3;
+  padding: 0 2px;
+  line-height: 1;
+  color: inherit;
+  transition: opacity 0.15s;
+}
+
+.sticky-note-delete:hover {
+  opacity: 0.9;
+}
+
+.sticky-note-text {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: inherit;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1rem;
+  line-height: 1.45;
+  padding: 6px 10px 10px;
+  resize: none;
+  outline: none;
+  min-height: 80px;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.sticky-note-text::placeholder {
+  color: inherit;
+  opacity: 0.35;
+  font-style: italic;
+}
+
+@keyframes noteSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
