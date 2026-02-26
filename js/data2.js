@@ -8,18 +8,6 @@ PATTERNS.push(
         description: "Network and grid problems testing traversal, connectivity, and cycle detection using BFS and DFS.",
         keyInsight: "Model the problem as nodes + edges. BFS = shortest path (unweighted). DFS = explore all paths / connected components. Track visited nodes.",
         algorithms: ["BFS (Breadth-First Search)", "DFS (Depth-First Search)", "Union-Find", "Topological Sort (Kahn's)", "Flood Fill"],
-        codeTemplate: `# BFS on grid — Number of Islands
-def numIslands(grid):
-    from collections import deque
-    rows, cols = len(grid), len(grid[0])
-    visited = set()
-    count = 0
-    for r in range(rows):
-        for c in range(cols):
-            if grid[r][c] == "1" and (r,c) not in visited:
-                bfs(grid, r, c, visited)
-                count += 1
-    return count`,
         problems: [
             {
                 algorithm: "Matrix DFS / BFS (Flood Fill)",
@@ -60,20 +48,6 @@ def numIslands(grid):
         description: "Complex graph algorithms: shortest path (Dijkstra, Bellman-Ford), MST (Prim, Kruskal), topological sort, and Union-Find.",
         keyInsight: "Dijkstra = weighted shortest path (no negative edges). Topological sort = ordering with dependencies (DAG). Union-Find = dynamic connectivity.",
         algorithms: ["Dijkstra's Algorithm", "Bellman-Ford Algorithm", "Floyd-Warshall Algorithm", "Kruskal's MST", "Prim's MST", "Tarjan's SCC", "Union-Find (Ranked)"],
-        codeTemplate: `# Dijkstra's algorithm
-import heapq
-def dijkstra(graph, start):
-    dist = {start: 0}
-    heap = [(0, start)]
-    while heap:
-        d, u = heapq.heappop(heap)
-        if d > dist.get(u, float('inf')): continue
-        for v, w in graph[u]:
-            nd = d + w
-            if nd < dist.get(v, float('inf')):
-                dist[v] = nd
-                heapq.heappush(heap, (nd, v))
-    return dist`,
         problems: [
             {
                 algorithm: "Dijkstra's Algorithm",
@@ -121,15 +95,6 @@ def dijkstra(graph, start):
         description: "Optimization over sequences using memoization or tabulation. Build solutions from smaller overlapping subproblems.",
         keyInsight: "Define state clearly (what does dp[i] represent?). Find the recurrence relation. Base cases first, then fill the table.",
         algorithms: ["Kadane's Algorithm", "Fibonacci Sequence DP", "Coin Change DP", "Longest Increasing Subsequence (LIS)", "Memoization / Tabulation"],
-        codeTemplate: `# Classic DP — Coin Change
-def coinChange(coins, amount):
-    dp = [float('inf')] * (amount + 1)
-    dp[0] = 0
-    for a in range(1, amount + 1):
-        for c in coins:
-            if c <= a:
-                dp[a] = min(dp[a], dp[a - c] + 1)
-    return dp[amount] if dp[amount] != float('inf') else -1`,
         problems: [
             {
                 algorithm: "Fibonacci Sequence DP",
@@ -177,17 +142,6 @@ def coinChange(coins, amount):
         description: "Multi-dimensional DP on grids, two strings, or sequences. Includes LCS, edit distance, and knapsack variants.",
         keyInsight: "State often involves two indices (i, j). Classic: dp[i][j] = best answer considering first i items of seq1 and first j items of seq2.",
         algorithms: ["Longest Common Subsequence (LCS)", "Edit Distance (Levenshtein)", "0/1 Knapsack", "Matrix Chain Multiplication", "Grid DP"],
-        codeTemplate: `# Longest Common Subsequence
-def lcs(text1, text2):
-    m, n = len(text1), len(text2)
-    dp = [[0]*(n+1) for _ in range(m+1)]
-    for i in range(1, m+1):
-        for j in range(1, n+1):
-            if text1[i-1] == text2[j-1]:
-                dp[i][j] = dp[i-1][j-1] + 1
-            else:
-                dp[i][j] = max(dp[i-1][j], dp[i][j-1])
-    return dp[m][n]`,
         problems: [
             {
                 algorithm: "Grid DP",
@@ -226,13 +180,6 @@ def lcs(text1, text2):
         description: "Makes locally optimal choices hoping for a global optimum. Requires proving the greedy choice property holds.",
         keyInsight: "Sort first, then greedily pick. If a greedy approach gives wrong answers, switch to DP. Intervals + greedy = very common combo.",
         algorithms: ["Greedy Choice Property", "Activity Selection", "Huffman Coding", "Fractional Knapsack", "Jump Game Greedy"],
-        codeTemplate: `# Jump Game — greedy approach
-def canJump(nums):
-    goal = len(nums) - 1
-    for i in range(len(nums) - 2, -1, -1):
-        if i + nums[i] >= goal:
-            goal = i
-    return goal == 0`,
         problems: [
             {
                 algorithm: "Greedy Array Choices",
@@ -272,16 +219,6 @@ def canJump(nums):
         description: "Problems involving ranges, scheduling, and overlapping segments. Almost always involves sorting by start or end time.",
         keyInsight: "Sort intervals by start time. Then merge overlapping ones or use greedy to pick non-overlapping ones. Sweep line for complex multi-interval queries.",
         algorithms: ["Merge Intervals", "Sweep Line Algorithm", "Interval Scheduling (Greedy)", "Line Sweep / Event Points"],
-        codeTemplate: `# Merge Intervals
-def merge(intervals):
-    intervals.sort(key=lambda x: x[0])
-    merged = [intervals[0]]
-    for start, end in intervals[1:]:
-        if start <= merged[-1][1]:
-            merged[-1][1] = max(merged[-1][1], end)
-        else:
-            merged.append([start, end])
-    return merged`,
         problems: [
             {
                 algorithm: "Interval Merging / Sorting",
@@ -313,16 +250,6 @@ def merge(intervals):
         description: "Number theory, combinatorics, matrix transformations, and coordinate geometry problems.",
         keyInsight: "Look for mathematical shortcuts. Modular arithmetic for large numbers. In-place matrix ops use the 'rotate layer by layer' technique.",
         algorithms: ["Sieve of Eratosthenes", "Euclidean GCD", "Fast Exponentiation", "Matrix Rotation (Layer)", "Modular Arithmetic"],
-        codeTemplate: `# Rotate Image (90° clockwise)
-def rotate(matrix):
-    n = len(matrix)
-    # Transpose
-    for i in range(n):
-        for j in range(i+1, n):
-            matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
-    # Reverse each row
-    for row in matrix:
-        row.reverse()`,
         problems: [
             {
                 algorithm: "Matrix Math / Transformations",
@@ -361,12 +288,6 @@ def rotate(matrix):
         description: "Operates on individual bits for efficient computation. XOR tricks, bit masking, and counting set bits.",
         keyInsight: "XOR: a ^ a = 0, a ^ 0 = a — finds unique elements. n & (n-1) clears lowest set bit. Bit masking for subsets.",
         algorithms: ["XOR Trick (Single Number)", "Brian Kernighan's Algorithm", "Bit Masking", "Subset Enumeration via Bits"],
-        codeTemplate: `# Single Number (XOR trick)
-def singleNumber(nums):
-    result = 0
-    for n in nums:
-        result ^= n
-    return result`,
         problems: [
             {
                 algorithm: "XOR Techniques",
@@ -397,16 +318,6 @@ def singleNumber(nums):
         description: "Text processing, pattern matching, and character manipulation problems testing hash maps, two pointers, and string algorithms.",
         keyInsight: "Frequency maps (Counter) solve most anagram/permutation problems. Expand from center for palindromes. KMP for pattern matching.",
         algorithms: ["KMP Pattern Matching", "Rabin-Karp (Rolling Hash)", "Manacher's Algorithm", "Z-Algorithm", "Expand Around Center"],
-        codeTemplate: `# Expand around center — palindromes
-def longestPalindrome(s):
-    res = ""
-    for i in range(len(s)):
-        for l, r in [(i,i), (i,i+1)]:  # odd & even
-            while l >= 0 and r < len(s) and s[l] == s[r]:
-                if r - l + 1 > len(res):
-                    res = s[l:r+1]
-                l -= 1; r += 1
-    return res`,
         problems: [
             {
                 algorithm: "Palindrome Matching (Expand Around Center)",
@@ -448,23 +359,6 @@ def longestPalindrome(s):
         description: "Grid-based traversal and transformation — spiral order, diagonal traversal, DFS/BFS on grids, and flood fill.",
         keyInsight: "Matrix problems are often graph problems in disguise. Use direction arrays [(0,1),(1,0),(0,-1),(-1,0)] for neighbor traversal.",
         algorithms: ["Spiral Traversal", "Layer-by-Layer Rotation", "DFS / BFS on Grid", "Direction Arrays", "In-Place Marking"],
-        codeTemplate: `# Spiral matrix traversal
-def spiralOrder(matrix):
-    res = []
-    top, btm = 0, len(matrix) - 1
-    left, right = 0, len(matrix[0]) - 1
-    while top <= btm and left <= right:
-        for c in range(left, right + 1): res.append(matrix[top][c])
-        top += 1
-        for r in range(top, btm + 1): res.append(matrix[r][right])
-        right -= 1
-        if top <= btm:
-            for c in range(right, left - 1, -1): res.append(matrix[btm][c])
-            btm -= 1
-        if left <= right:
-            for r in range(btm, top - 1, -1): res.append(matrix[r][left])
-            left += 1
-    return res`,
         problems: [
             {
                 algorithm: "Traversal Simulation",

@@ -398,7 +398,6 @@
               </div>
             </div>
           ` : ""}
-          ${pat.codeTemplate ? `<div class="code-label">Algorithm Basecode</div><div class="code-block"><pre>${escapeHtml(pat.codeTemplate)}</pre></div>` : ""}
         </div>
 
         <div class="detail-filters" id="detailFilters">

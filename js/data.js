@@ -16,13 +16,6 @@ const PATTERNS = [
     description: "Foundation of most interview problems. Tests in-place manipulation, prefix computations, and classic array algorithms like Kadane's and Dutch National Flag.",
     keyInsight: "Think about what happens when the array is sorted. In-place tricks (swap, overwrite) avoid extra space. Prefix sums turn range queries into O(1).",
     algorithms: ["Kadane's Algorithm", "Prefix Sum", "Boyer-Moore Voting", "Dutch National Flag", "In-Place Array Operations"],
-    codeTemplate: `# Kadane's Algorithm — Maximum Subarray
-def maxSubArray(nums):
-    cur = best = nums[0]
-    for n in nums[1:]:
-        cur = max(n, cur + n)
-        best = max(best, cur)
-    return best`,
     problems: [
       {
         algorithm: "Prefix Sum",
@@ -61,14 +54,6 @@ def maxSubArray(nums):
     description: "Hash maps and sets provide O(1) lookups. Essential for frequency counting, duplicate detection, grouping, and complement-based pair problems.",
     keyInsight: "When you see 'find duplicates', 'group by', or 'check if exists' — reach for a hash map. Two Sum is the mother of all hash problems.",
     algorithms: ["Hashing / Frequency Count", "Two Sum Pattern", "Anagram Grouping", "Set Operations"],
-    codeTemplate: `# Two Sum pattern
-def two_sum(nums, target):
-    seen = {}
-    for i, n in enumerate(nums):
-        comp = target - n
-        if comp in seen:
-            return [seen[comp], i]
-        seen[n] = i`,
     problems: [
       {
         algorithm: "Hashing / Frequency Count",
@@ -88,14 +73,6 @@ def two_sum(nums, target):
     description: "Uses two pointers traversing a data structure simultaneously — from opposite ends, same direction, or at different speeds — to efficiently solve pair/triplet problems.",
     keyInsight: "If the array is sorted (or can be sorted), two pointers from opposite ends avoid O(n²). For linked lists, fast/slow pointers detect cycles.",
     algorithms: ["Two Pointer Technique", "Three Pointer / 3Sum", "Fast & Slow Pointers", "Squeeze Technique"],
-    codeTemplate: `# Two pointers on sorted array
-def two_sum_sorted(nums, target):
-    l, r = 0, len(nums) - 1
-    while l < r:
-        s = nums[l] + nums[r]
-        if s == target: return [l, r]
-        elif s < target: l += 1
-        else: r -= 1`,
     problems: [
       {
         algorithm: "Opposite Ends (Squeeze Technique)",
@@ -129,16 +106,6 @@ def two_sum_sorted(nums, target):
     description: "Maintains a contiguous window over data, expanding/shrinking to find optimal subsets. Converts brute-force O(n²) substring/subarray problems to O(n).",
     keyInsight: "Fixed window: slide by adding right, removing left. Variable window: expand right until invalid, then shrink left until valid again.",
     algorithms: ["Fixed-Size Sliding Window", "Variable-Size Sliding Window", "Shrinkable Window", "Rabin-Karp (Rolling Hash)"],
-    codeTemplate: `# Variable sliding window
-def longest_substring(s):
-    seen = set()
-    l = res = 0
-    for r in range(len(s)):
-        while s[r] in seen:
-            seen.remove(s[l]); l += 1
-        seen.add(s[r])
-        res = max(res, r - l + 1)
-    return res`,
     problems: [
       {
         algorithm: "Fixed-Size Sliding Window",
@@ -173,15 +140,6 @@ def longest_substring(s):
     description: "LIFO data structure ideal for matching pairs, nested structures, and maintaining monotonic sequences for next-greater/smaller element problems.",
     keyInsight: "When you see nested or matching structures (parentheses, HTML tags), use a stack. For 'next greater element', use a monotonic stack.",
     algorithms: ["Monotonic Stack", "Shunting Yard Algorithm", "Balanced Parentheses Check", "Next Greater Element"],
-    codeTemplate: `# Monotonic stack — next greater element
-def next_greater(nums):
-    res = [-1] * len(nums)
-    stack = []
-    for i, n in enumerate(nums):
-        while stack and nums[stack[-1]] < n:
-            res[stack.pop()] = n
-        stack.append(i)
-    return res`,
     problems: [
       {
         algorithm: "Balanced Parentheses & String parsing",
@@ -220,16 +178,6 @@ def next_greater(nums):
     description: "Divides the search space in half each step. Extends beyond sorted arrays to 'search on answer' problems where you binary search the solution space.",
     keyInsight: "If the answer space is monotonic (sorted), you can binary search it. Look for 'minimum X that satisfies condition' — classic binary search on answer.",
     algorithms: ["Classic Binary Search", "Binary Search on Answer", "Upper / Lower Bound", "Bisect Left / Right"],
-    codeTemplate: `# Binary search on answer
-def min_capacity(weights, days):
-    lo, hi = max(weights), sum(weights)
-    while lo < hi:
-        mid = (lo + hi) // 2
-        if can_ship(weights, days, mid):
-            hi = mid
-        else:
-            lo = mid + 1
-    return lo`,
     problems: [
       {
         algorithm: "Classic Binary Search",
@@ -264,16 +212,6 @@ def min_capacity(weights, days):
     description: "Tests pointer manipulation, in-place operations, and cycle detection. Key technique: fast & slow pointers.",
     keyInsight: "Use a dummy head node to simplify edge cases. Fast/slow pointers find midpoints and detect cycles. Reverse in-place by re-pointing next pointers.",
     algorithms: ["Floyd's Cycle Detection", "In-Place Reversal", "Merge Sort (Linked List)", "Runner Technique (Fast/Slow)"],
-    codeTemplate: `# Reverse a linked list
-def reverse(head):
-    prev = None
-    curr = head
-    while curr:
-        nxt = curr.next
-        curr.next = prev
-        prev = curr
-        curr = nxt
-    return prev`,
     problems: [
       {
         algorithm: "In-Place Reversal",
@@ -307,12 +245,6 @@ def reverse(head):
     description: "Hierarchical structures testing recursion, DFS/BFS traversals, and BST properties. Most tree problems follow a recursive pattern.",
     keyInsight: "Think recursively: solve for root using solutions from left and right subtrees. For level-order problems use BFS with a queue.",
     algorithms: ["DFS (Preorder / Inorder / Postorder)", "BFS (Level Order)", "Morris Traversal", "BST Property Check", "Lowest Common Ancestor"],
-    codeTemplate: `# DFS tree pattern
-def max_depth(root):
-    if not root: return 0
-    left = max_depth(root.left)
-    right = max_depth(root.right)
-    return 1 + max(left, right)`,
     problems: [
       {
         algorithm: "DFS (Depth-First Search)",
@@ -351,21 +283,6 @@ def max_depth(root):
     description: "Prefix tree for efficient string operations — autocomplete, spell-check, and word search problems.",
     keyInsight: "Each node stores children (usually a dict or array of 26). Mark end-of-word nodes. Traverse character by character.",
     algorithms: ["Trie Insert / Search", "Prefix Matching", "Bitwise Trie (XOR)", "Autocomplete via DFS"],
-    codeTemplate: `class TrieNode:
-    def __init__(self):
-        self.children = {}
-        self.is_end = False
-
-class Trie:
-    def __init__(self):
-        self.root = TrieNode()
-    def insert(self, word):
-        node = self.root
-        for c in word:
-            if c not in node.children:
-                node.children[c] = TrieNode()
-            node = node.children[c]
-        node.is_end = True`,
     problems: [
       {
         algorithm: "Trie Insert / Search",
@@ -395,12 +312,6 @@ class Trie:
     description: "Efficient min/max access in O(log n). Essential for top-K, streaming median, and scheduling problems.",
     keyInsight: "Use a max-heap for 'K smallest' and a min-heap for 'K largest'. Two heaps (max + min) solve streaming median.",
     algorithms: ["Min Heap / Max Heap", "Two Heap (Median)", "Top-K via Heap", "Heap Sort", "Quickselect"],
-    codeTemplate: `import heapq
-# Top K frequent elements
-def top_k(nums, k):
-    count = Counter(nums)
-    return heapq.nlargest(k, count.keys(),
-                          key=count.get)`,
     problems: [
       {
         algorithm: "Min Heap / Max Heap (Top-K)",
@@ -433,17 +344,6 @@ def top_k(nums, k):
     description: "Explores all possible solutions by making choices incrementally and undoing them when they fail constraints. Builds a decision tree.",
     keyInsight: "Template: choose → explore → unchoose. Prune branches early when constraints are violated to avoid exponential blowup.",
     algorithms: ["Recursive Backtracking", "Pruning", "Permutation Generation", "Subset Generation", "N-Queens Placement"],
-    codeTemplate: `# Subsets pattern
-def subsets(nums):
-    res = []
-    def backtrack(start, path):
-        res.append(path[:])
-        for i in range(start, len(nums)):
-            path.append(nums[i])
-            backtrack(i + 1, path)
-            path.pop()
-    backtrack(0, [])
-    return res`,
     problems: [
       {
         algorithm: "Subset / Combination Generation",
