@@ -15,14 +15,14 @@
                 p("Possible Bipartition", M, 0, "possible-bipartition"),
                 p("Flower Planting With No Adjacent", M, 0, "flower-planting-with-no-adjacent"),
                 p("Shortest Bridge", M, 0, "shortest-bridge"),
-                p("Minimum Knight Moves", M, 1, "minimum-knight-moves"),
+                p("Steps by Knight", M, 1, "steps-by-knight5927"),
                 p("Snakes and Ladders", M, 0, "snakes-and-ladders")
             ]
         },
         {
             algorithm: "Multi-Source BFS / Advanced DFS",
             list: [
-                p("Walls and Gates", M, 1, "walls-and-gates"),
+                p("Distance of Nearest Cell Having 1", M, 1, "distance-of-nearest-cell-having-1-1587115620"),
                 p("As Far from Land as Possible", M, 0, "as-far-from-land-as-possible"),
                 p("Time Needed to Inform All Employees", M, 0, "time-needed-to-inform-all-employees"),
                 p("Minimum Number of Vertices to Reach All Nodes", M, 0, "minimum-number-of-vertices-to-reach-all-nodes"),
@@ -50,14 +50,14 @@
             list: [
                 p("Smallest String With Swaps", M, 0, "smallest-string-with-swaps"),
                 p("Satisfiability of Equality Equations", M, 0, "satisfiability-of-equality-equations"),
-                p("Optimize Water Distribution in a Village", H, 1, "optimize-water-distribution-in-a-village"),
+                p("Water Connection Problem", H, 1, "water-connection-problem5822"),
                 p("Remove Max Number of Edges to Keep Graph Fully Traversable", H, 0, "remove-max-number-of-edges-to-keep-graph-fully-traversable")
             ]
         },
         {
             algorithm: "Topological Sort Advanced",
             list: [
-                p("Parallel Courses", M, 1, "parallel-courses"),
+                p("Prerequisite Tasks", M, 1, "prerequisite-tasks"),
                 p("Longest Path With Different Adjacent Characters", H, 0, "longest-path-with-different-adjacent-characters"),
                 p("Sort Items by Groups Respecting Dependencies", H, 0, "sort-items-by-groups-respecting-dependencies")
             ]
@@ -72,8 +72,8 @@
                 p("Best Time to Buy and Sell Stock with Transaction Fee", M, 0, "best-time-to-buy-and-sell-stock-with-transaction-fee"),
                 p("Best Time to Buy and Sell Stock III", H, 0, "best-time-to-buy-and-sell-stock-iii"),
                 p("Best Time to Buy and Sell Stock IV", H, 0, "best-time-to-buy-and-sell-stock-iv"),
-                p("Paint House", M, 1, "paint-house"),
-                p("Paint Fence", M, 1, "paint-fence")
+                p("Paint N Houses", M, 1, "distinct-coloring--170645"),
+                p("Painting the Fence", M, 1, "painting-the-fence3727")
             ]
         },
         {
@@ -159,7 +159,7 @@
                 p("Teemo Attacking", E, 0, "teemo-attacking"),
                 p("Summary Ranges", E, 0, "summary-ranges"),
                 p("Video Stitching", M, 0, "video-stitching"),
-                p("Employee Free Time", H, 1, "employee-free-time")
+                p("Employee Free Time", H, 0, "employee-free-time")
             ]
         }
     ]);
@@ -184,7 +184,7 @@
                 p("Nth Digit", M, 0, "nth-digit"),
                 p("Super Pow", M, 0, "super-pow"),
                 p("Maximum Points on a Line", H, 0, "max-points-on-a-line"),
-                p("Basic Calculator III", H, 1, "basic-calculator-iii")
+                p("Basic Calculator III", H, 0, "basic-calculator-iii")
             ]
         }
     ]);
@@ -230,7 +230,7 @@
             list: [
                 p("Longest Common Subsequence", M, 0, "longest-common-subsequence"),
                 p("Edit Distance", M, 0, "edit-distance"),
-                p("Shortest Way to Form String", M, 1, "shortest-way-to-form-string"),
+                p("Shortest Way to Form String", M, 0, "shortest-way-to-form-string"),
                 p("Reorganize String", M, 0, "reorganize-string"),
                 p("Delete Operation for Two Strings", M, 0, "delete-operation-for-two-strings"),
                 p("Smallest String Starting From Leaf", M, 0, "smallest-string-starting-from-leaf")
@@ -247,7 +247,7 @@
                 p("Surrounded Regions", M, 0, "surrounded-regions"),
                 p("Pacific Atlantic Water Flow", M, 0, "pacific-atlantic-water-flow"),
                 p("Rotting Oranges", M, 0, "rotting-oranges"),
-                p("Walls and Gates", M, 1, "walls-and-gates")
+                p("Distance of Nearest Cell Having 1", M, 1, "distance-of-nearest-cell-having-1-1587115620")
             ]
         },
         {

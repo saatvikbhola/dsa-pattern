@@ -76,7 +76,7 @@ def two_sum(nums, target):
           p("Two Sum", E, 0, "two-sum"), p("Contains Duplicate", E, 0, "contains-duplicate"), p("Valid Anagram", E, 0, "valid-anagram"),
           p("Group Anagrams", M, 0, "group-anagrams"), p("Top K Frequent Elements", M, 0, "top-k-frequent-elements"),
           p("Valid Sudoku", M, 0, "valid-sudoku"), p("Intersection of Two Arrays II", E, 0, "intersection-of-two-arrays-ii"),
-          p("Encode and Decode Strings", M, 1, "encode-and-decode-strings3544"), p("4Sum II", M, 0, "4sum-ii"),
+          p("Encode and Decode Strings", M, 1, "encode-and-decode-strings"), p("4Sum II", M, 0, "4sum-ii"),
           p("Longest Consecutive Sequence", M, 0, "longest-consecutive-sequence")
         ]
       }

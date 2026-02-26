@@ -49,7 +49,7 @@ def numIslands(grid):
                 list: [
                     p("Redundant Connection", M, 0, "redundant-connection"), p("Accounts Merge", M, 0, "accounts-merge"),
                     p("Is Graph Bipartite", M, 0, "is-graph-bipartite"), p("Number of Provinces", M, 0, "number-of-provinces"),
-                    p("Number of Connected Components", M, 1, "number-of-islands3702"), p("Graph Valid Tree", M, 1, "graph-valid-tree")
+                    p("Number of Connected Components", M, 1, "connected-components-in-an-undirected-graph"), p("Graph Valid Tree", M, 1, "is-it-a-tree")
                 ]
             }
         ]
@@ -294,7 +294,7 @@ def merge(intervals):
             {
                 algorithm: "Scheduling / Line Sweep",
                 list: [
-                    p("Meeting Rooms", E, 1, "attend-all-meetings"), p("Meeting Rooms II", M, 1, "meeting-rooms8028"),
+                    p("Meeting Rooms", E, 1, "attend-all-meetings"), p("Meeting Rooms II", M, 1, "attend-all-meetings-ii"),
                     p("My Calendar I", M, 0, "my-calendar-i"), p("My Calendar II", M, 0, "my-calendar-ii"),
                     p("Car Pooling", M, 0, "car-pooling")
                 ]

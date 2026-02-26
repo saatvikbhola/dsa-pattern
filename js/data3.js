@@ -112,8 +112,8 @@
             list: [
                 p("Repeated DNA Sequences", M, 0, "repeated-dna-sequences"),
                 p("Minimum Window Subsequence", H, 1, "minimum-window-subsequence"),
-                p("Longest Substring with At Most Two Distinct Characters", M, 1, "longest-substring-with-at-most-two-distinct-characters"),
-                p("Longest Substring with At Most K Distinct Characters", M, 1, "longest-substring-with-at-most-k-distinct-characters")
+                p("Longest Substring with At Most Two Distinct Characters", M, 1, "longest-k-unique-characters-substring0853"),
+                p("Longest Substring with At Most K Distinct Characters", M, 1, "longest-k-unique-characters-substring0853")
             ]
         }
     ]);
@@ -173,7 +173,7 @@
                 p("Design Linked List", M, 0, "design-linked-list"),
                 p("Linked List Random Node", M, 0, "linked-list-random-node"),
                 p("Partition List", M, 0, "partition-list"),
-                p("Insert into a Sorted Circular Linked List", M, 1, "insert-into-a-sorted-circular-linked-list"),
+                p("Insert into a Sorted Circular Linked List", M, 1, "sorted-insert-for-circular-linked-list"),
                 p("Split Linked List in Parts", M, 0, "split-linked-list-in-parts"),
                 p("Remove Duplicates from Sorted List", E, 0, "remove-duplicates-from-sorted-list"),
                 p("Remove Duplicates from Sorted List II", M, 0, "remove-duplicates-from-sorted-list-ii")
@@ -218,7 +218,7 @@
                 p("Implement Magic Dictionary", M, 0, "implement-magic-dictionary"),
                 p("Short Encoding of Words", M, 0, "short-encoding-of-words"),
                 p("Prefix and Suffix Search", H, 0, "prefix-and-suffix-search"),
-                p("Design Search Autocomplete System", H, 1, "design-search-autocomplete-system")
+                p("Design Search Autocomplete System", H, 1, "search-query-auto-complete")
             ]
         }
     ]);
