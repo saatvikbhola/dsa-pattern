@@ -341,7 +341,24 @@ PATTERNS.push(
                 list: [
                     p("Minimum Window Substring", H, 0, "minimum-window-substring"), p("String to Integer (atoi)", M, 0, "string-to-integer-atoi"),
                     p("Count and Say", M, 0, "count-and-say"), p("Decode String", M, 0, "decode-string"),
-                    p("Repeated DNA Sequences", M, 0, "repeated-dna-sequences")
+                    p("Repeated DNA Sequences", M, 0, "repeated-dna-sequences"), p("Goal Parser Interpretation", E, 0, "goal-parser-interpretation")
+                ]
+            },
+            {
+                algorithm: "Balanced Strings & Parentheses",
+                list: [
+                    p("Maximum Nesting Depth of the Parentheses", E, 0, "maximum-nesting-depth-of-the-parentheses"), p("Split a String in Balanced Strings", E, 0, "split-a-string-in-balanced-strings"),
+                    p("Determine if String Halves Are Alike", E, 0, "determine-if-string-halves-are-alike"), p("Remove Outermost Parentheses", E, 0, "remove-outermost-parentheses")
+                ]
+            },
+            {
+                algorithm: "String Transformations & Iteration",
+                list: [
+                    p("Defanging an IP Address", E, 0, "defanging-an-ip-address"), p("Length of Last Word", E, 0, "length-of-last-word"),
+                    p("Sorting the Sentence", E, 0, "sorting-the-sentence"), p("To Lower Case", E, 0, "to-lower-case"),
+                    p("Check If Two String Arrays are Equivalent", E, 0, "check-if-two-string-arrays-are-equivalent"), p("Replace All Digits with Characters", E, 0, "replace-all-digits-with-characters"),
+                    p("Final Value of Variable After Performing Operations", E, 0, "final-value-of-variable-after-performing-operations"), p("Shuffle String", E, 0, "shuffle-string"),
+                    p("Count Items Matching a Rule", E, 0, "count-items-matching-a-rule")
                 ]
             },
             {

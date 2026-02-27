@@ -21,7 +21,9 @@ const PATTERNS = [
         algorithm: "Prefix Sum",
         list: [
           p("Product of Array Except Self", M, 0, "product-of-array-except-self"), p("Subarray Sum Equals K", M, 0, "subarray-sum-equals-k"),
-          p("Range Sum Query - Immutable", E, 0, "range-sum-query-immutable"), p("Minimum Size Subarray Sum", M, 0, "minimum-size-subarray-sum")
+          p("Range Sum Query - Immutable", E, 0, "range-sum-query-immutable"), p("Minimum Size Subarray Sum", M, 0, "minimum-size-subarray-sum"),
+          p("Running Sum of 1d Array", E, 0, "running-sum-of-1d-array"), p("Left and Right Sum Differences", E, 0, "left-and-right-sum-differences"),
+          p("Check if All the Integers in a Range Are Covered", E, 0, "check-if-all-the-integers-in-a-range-are-covered")
         ]
       },
       {
@@ -34,10 +36,20 @@ const PATTERNS = [
         ]
       },
       {
+        algorithm: "Array Simulation & Transformations",
+        list: [
+          p("Build Array from Permutation", E, 0, "build-array-from-permutation"), p("Concatenation of Array", E, 0, "concatenation-of-array"),
+          p("Shuffle the Array", E, 0, "shuffle-the-array"), p("Create Target Array in the Given Order", E, 0, "create-target-array-in-the-given-order"),
+          p("Decode XORed Array", E, 0, "decode-xored-array"), p("Decompress Run-Length Encoded List", E, 0, "decompress-run-length-encoded-list"),
+          p("Richest Customer Wealth", E, 0, "richest-customer-wealth"), p("How Many Numbers Are Smaller Than the Current Number", E, 0, "how-many-numbers-are-smaller-than-the-current-number")
+        ]
+      },
+      {
         algorithm: "Kadane's Algorithm & Math",
         list: [
           p("Best Time to Buy and Sell Stock", E, 0, "best-time-to-buy-and-sell-stock"), p("Plus One", E, 0, "plus-one"),
-          p("Pascal's Triangle", E, 0, "pascals-triangle"), p("Trapping Rain Water", H, 0, "trapping-rain-water")
+          p("Pascal's Triangle", E, 0, "pascals-triangle"), p("Trapping Rain Water", H, 0, "trapping-rain-water"),
+          p("Kids With the Greatest Number of Candies", E, 0, "kids-with-the-greatest-number-of-candies")
         ]
       },
       {
@@ -62,7 +74,18 @@ const PATTERNS = [
           p("Group Anagrams", M, 0, "group-anagrams"), p("Top K Frequent Elements", M, 0, "top-k-frequent-elements"),
           p("Valid Sudoku", M, 0, "valid-sudoku"), p("Intersection of Two Arrays II", E, 0, "intersection-of-two-arrays-ii"),
           p("Encode and Decode Strings", M, 1, "encode-and-decode-strings"), p("4Sum II", M, 0, "4sum-ii"),
-          p("Longest Consecutive Sequence", M, 0, "longest-consecutive-sequence")
+          p("Longest Consecutive Sequence", M, 0, "longest-consecutive-sequence"),
+          p("First Unique Character in a String", E, 0, "first-unique-character-in-a-string"), p("Find the Difference", E, 0, "find-the-difference"),
+          p("Find Common Characters", E, 0, "find-common-characters")
+        ]
+      },
+      {
+        algorithm: "Maps & Sets",
+        list: [
+          p("Jewels and Stones", E, 0, "jewels-and-stones"), p("Number of Good Pairs", E, 0, "number-of-good-pairs"),
+          p("Ransom Note", E, 0, "ransom-note"), p("Count the Number of Consistent Strings", E, 0, "count-the-number-of-consistent-strings"),
+          p("Decode the Message", E, 0, "decode-the-message"), p("Sum of Unique Elements", E, 0, "sum-of-unique-elements"),
+          p("Unique Number of Occurrences", E, 0, "unique-number-of-occurrences"), p("Check if the Sentence Is Pangram", E, 0, "check-if-the-sentence-is-pangram")
         ]
       }
     ]
@@ -80,7 +103,10 @@ const PATTERNS = [
           p("Valid Palindrome", E, 0, "valid-palindrome"), p("Two Sum II", M, 0, "two-sum-ii-input-array-is-sorted"),
           p("Container With Most Water", M, 0, "container-with-most-water"), p("Reverse String", E, 0, "reverse-string"),
           p("Squares of a Sorted Array", E, 0, "squares-of-a-sorted-array"), p("Trapping Rain Water", H, 0, "trapping-rain-water"),
-          p("Boats to Save People", M, 0, "boats-to-save-people")
+          p("Boats to Save People", M, 0, "boats-to-save-people"), p("Reverse Vowels of a String", E, 0, "reverse-vowels-of-a-string"),
+          p("Valid Palindrome II", E, 0, "valid-palindrome-ii"), p("Find First Palindromic String in the Array", E, 0, "find-first-palindromic-string-in-the-array"),
+          p("Reverse Prefix of Word", E, 0, "reverse-prefix-of-word"), p("Reverse Only Letters", E, 0, "reverse-only-letters"),
+          p("Count Pairs Whose Sum is Less than Target", E, 0, "count-pairs-whose-sum-is-less-than-target"), p("Sort Array By Parity", E, 0, "sort-array-by-parity")
         ]
       },
       {
@@ -89,7 +115,9 @@ const PATTERNS = [
           p("Remove Element", E, 0, "remove-element"), p("Move Zeroes", E, 0, "move-zeroes"),
           p("Remove Duplicates from Sorted Array II", M, 0, "remove-duplicates-from-sorted-array-ii"),
           p("Backspace String Compare", E, 0, "backspace-string-compare"), p("Is Subsequence", E, 0, "is-subsequence"),
-          p("Partition Labels", M, 0, "partition-labels"), p("Sort Colors", M, 0, "sort-colors"), p("Assign Cookies", E, 0, "assign-cookies")
+          p("Partition Labels", M, 0, "partition-labels"), p("Sort Colors", M, 0, "sort-colors"), p("Assign Cookies", E, 0, "assign-cookies"),
+          p("Merge Strings Alternately", E, 0, "merge-strings-alternately"), p("Shortest Distance to a Character", E, 0, "shortest-distance-to-a-character"),
+          p("Sort Array By Parity II", E, 0, "sort-array-by-parity-ii"), p("Find the Distance Value Between Two Arrays", E, 0, "find-the-distance-value-between-two-arrays")
         ]
       },
       {
@@ -112,7 +140,12 @@ const PATTERNS = [
         list: [
           p("Maximum Average Subarray I", E, 0, "maximum-average-subarray-i"), p("Find All Anagrams in a String", M, 0, "find-all-anagrams-in-a-string"),
           p("Permutation in String", M, 0, "permutation-in-string"), p("Maximum Number of Vowels in a Substring", M, 0, "maximum-number-of-vowels-in-a-substring-of-given-length"),
-          p("Substring with Concatenation of All Words", H, 0, "substring-with-concatenation-of-all-words")
+          p("Substring with Concatenation of All Words", H, 0, "substring-with-concatenation-of-all-words"),
+          p("Contains Duplicate II", E, 0, "contains-duplicate-ii"), p("Substrings of Size Three with Distinct Characters", E, 0, "substrings-of-size-three-with-distinct-characters"),
+          p("Minimum Difference Between Highest and Lowest of K Scores", E, 0, "minimum-difference-between-highest-and-lowest-of-k-scores"),
+          p("Defuse the Bomb", E, 0, "defuse-the-bomb"), p("Find the K-Beauty of a Number", E, 0, "find-the-k-beauty-of-a-number"),
+          p("Minimum Recolors to Get K Consecutive Black Blocks", E, 0, "minimum-recolors-to-get-k-consecutive-black-blocks"),
+          p("Alternating Groups I", E, 0, "alternating-groups-i")
         ]
       },
       {
@@ -121,7 +154,9 @@ const PATTERNS = [
           p("Best Time to Buy and Sell Stock", E, 0, "best-time-to-buy-and-sell-stock"), p("Longest Substring Without Repeating Characters", M, 0, "longest-substring-without-repeating-characters"),
           p("Longest Repeating Character Replacement", M, 0, "longest-repeating-character-replacement"), p("Minimum Size Subarray Sum", M, 0, "minimum-size-subarray-sum"),
           p("Max Consecutive Ones III", M, 0, "max-consecutive-ones-iii"), p("Longest Subarray of 1's After Deleting One Element", M, 0, "longest-subarray-of-1s-after-deleting-one-element"),
-          p("Fruit Into Baskets", M, 0, "fruit-into-baskets"), p("Count Number of Nice Subarrays", M, 0, "count-number-of-nice-subarrays")
+          p("Fruit Into Baskets", M, 0, "fruit-into-baskets"), p("Count Number of Nice Subarrays", M, 0, "count-number-of-nice-subarrays"),
+          p("Longest Nice Substring", E, 0, "longest-nice-substring"), p("Maximum Strong Pair XOR I", E, 0, "maximum-strong-pair-xor-i"),
+          p("Find the Longest Balanced Substring of a Binary String", E, 0, "find-the-longest-balanced-substring-of-a-binary-string")
         ]
       },
       {

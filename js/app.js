@@ -706,7 +706,7 @@
       <div class="app-main" id="randomizerMain">
         <div class="noise-overlay" aria-hidden="true" style="opacity: 0.15; z-index: -1;"></div>
         <div class="randomizer-header">
-          <h1 class="detail-title glitch-text" style="text-align: center;">RANDOMIZER</h1>
+          <h1 class="detail-title glitch-text" id="randomizerTitle" data-value="RANDOMIZER" style="text-align: center;">RANDOMIZER</h1>
           <p style="text-align: center; color: var(--text-muted); margin-bottom: 2rem;">Let fate decide your next problem.</p>
         </div>
         
@@ -751,7 +751,35 @@
     const btnSpin = document.getElementById("btnSpin");
     const diffSelect = document.getElementById("randDifficulty");
     const patternSelect = document.getElementById("randPattern");
+    const randTitle = document.getElementById("randomizerTitle");
     let currentDiff = "all";
+
+    // Alphabetical Decoding Hover Effect
+    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    let titleInterval = null;
+
+    randTitle.addEventListener("mouseover", event => {
+      let iteration = 0;
+      clearInterval(titleInterval);
+
+      titleInterval = setInterval(() => {
+        event.target.innerText = event.target.innerText
+          .split("")
+          .map((letter, index) => {
+            if (index < iteration) {
+              return event.target.dataset.value[index];
+            }
+            return letters[Math.floor(Math.random() * 26)];
+          })
+          .join("");
+
+        if (iteration >= event.target.dataset.value.length) {
+          clearInterval(titleInterval);
+        }
+
+        iteration += 1 / 3;
+      }, 30);
+    });
 
     diffSelect.addEventListener("change", () => {
       currentDiff = diffSelect.value;
